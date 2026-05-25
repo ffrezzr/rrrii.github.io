@@ -2,287 +2,338 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Последний звонок</title>
+  <title>Последний звонок 💛</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      margin: 0;
-      font-family: system-ui, sans-serif;
-      background: #f5f7fa;
-      color: #1e293b;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --gold: #f5c842; --pink: #ff7eb3; --soft-white: #fffdf7; --dark: #1a1228; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; background: var(--soft-white); color: var(--dark); overflow-x: hidden; }
 
-    /* ОБЛОЖКА */
+    /* COVER */
     .cover {
-      height: 100vh;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #b5fffc);
+      position: relative;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       text-align: center;
-      padding: 20px;
-      color: white;
-      position: relative;
+      padding: 40px 24px;
       overflow: hidden;
+      background: radial-gradient(ellipse at 20% 30%, #3b1f5e 0%, #1a1228 55%, #0d0a1a 100%);
+    }
+    .stars { position: absolute; inset: 0; pointer-events: none; }
+    .star {
+      position: absolute; border-radius: 50%; background: white;
+      animation: twinkle var(--d, 3s) ease-in-out infinite; opacity: 0;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.6); }
+      50% { opacity: var(--op, 0.9); transform: scale(1); }
+    }
+    .streamer {
+      position: absolute; width: 4px; border-radius: 2px;
+      animation: streamFall var(--dur, 6s) linear infinite; opacity: 0;
+    }
+    @keyframes streamFall {
+      0%   { transform: translateY(-60px) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.9; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+    .cover-badge {
+      font-weight: 300; font-size: 13px; letter-spacing: 5px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 18px;
+      opacity: 0; animation: riseUp 1s ease forwards 0.3s;
+    }
+    .cover-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(52px, 12vw, 110px); font-weight: 700;
+      line-height: 1; color: #fff;
+      opacity: 0; animation: riseUp 1s ease forwards 0.6s;
+    }
+    .cover-title span {
+      display: block; font-style: italic; font-weight: 400;
+      font-size: clamp(36px, 8vw, 72px);
+      background: linear-gradient(90deg, #f5c842, #ff7eb3, #a78bfa);
+      -webkit-background-clip: text; color: transparent; margin-top: 4px;
+    }
+    .cover-year {
+      font-size: 18px; font-weight: 700; letter-spacing: 8px;
+      color: rgba(255,255,255,0.35); margin-top: 16px;
+      opacity: 0; animation: riseUp 1s ease forwards 0.9s;
+    }
+    .cover-subtitle {
+      margin-top: 32px; font-size: 17px; font-weight: 300;
+      color: rgba(255,255,255,0.65); max-width: 380px; line-height: 1.7;
+      opacity: 0; animation: riseUp 1s ease forwards 1.2s;
+    }
+    .cover-btn {
+      display: inline-block; margin-top: 48px; padding: 16px 48px;
+      font-size: 15px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; text-decoration: none; color: var(--dark);
+      background: linear-gradient(135deg, #f5c842, #ff9f43);
+      border-radius: 60px; box-shadow: 0 0 40px rgba(245,200,66,0.45);
+      opacity: 0; animation: riseUp 1s ease forwards 1.5s;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .cover-btn:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 0 60px rgba(245,200,66,0.7); }
+    .cover-divider {
+      position: absolute; bottom: 0; left: 0; width: 100%; height: 80px;
+      background: var(--soft-white); clip-path: ellipse(60% 100% at 50% 100%);
+    }
+    .cover-seal {
+      position: absolute; bottom: 100px; right: clamp(20px, 6vw, 80px);
+      width: 100px; height: 100px; border-radius: 50%;
+      border: 2px solid rgba(245,200,66,0.4);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-size: 11px; color: var(--gold); letter-spacing: 1px;
+      opacity: 0; animation: riseUp 1s ease forwards 1.8s;
+    }
+    .cover-seal::before { content: '✦'; font-size: 28px; display: block; }
+    @keyframes riseUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    .cover h1 {
-      font-size: 48px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      opacity: 0;
-      animation: fadeIn 1.2s ease forwards;
+    /* ALBUM */
+    .album { max-width: 780px; margin: 0 auto; padding: 60px 24px 80px; }
+    .album-title { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; text-align: center; margin-bottom: 48px; }
+
+    /* CARDS */
+    .card {
+      position: relative; border-radius: 28px; overflow: hidden;
+      margin-bottom: 36px; box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease, box-shadow 0.3s;
+    }
+    .card.visible { opacity: 1; transform: translateY(0); }
+    .card:hover { box-shadow: 0 30px 80px rgba(0,0,0,0.18); }
+    .card-bg { position: absolute; inset: 0; z-index: 0; }
+    .card-inner { position: relative; z-index: 1; padding: 28px; }
+    .card-photo {
+      width: 100%; border-radius: 18px; display: block;
+      object-fit: cover; max-height: 420px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      transition: transform 0.4s ease;
+    }
+    .card:hover .card-photo { transform: scale(1.02); }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 20px; flex-wrap: wrap; gap: 12px;
+    }
+    .card-name {
+      font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700;
+      color: white; text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    .card-song-btn {
+      display: flex; align-items: center; gap: 10px; padding: 12px 22px;
+      background: rgba(255,255,255,0.18); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.3); border-radius: 50px;
+      text-decoration: none; color: white; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.5px; transition: background 0.3s, transform 0.2s;
+      max-width: 100%;
+    }
+    .card-song-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.04); }
+    .play-icon {
+      width: 30px; height: 30px; background: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .play-icon::after {
+      content: ''; display: block; width: 0; height: 0; border-style: solid;
+      border-width: 5px 0 5px 9px; border-color: transparent transparent transparent #333;
+      margin-left: 2px;
     }
 
-    .cover p {
-      font-size: 20px;
-      margin-bottom: 30px;
-      opacity: 0;
-      animation: fadeIn 1.6s ease forwards;
+    /* CARD GRADIENTS */
+    .stasya .card-bg { background: linear-gradient(145deg, #1d4e89, #4facfe, #89d8f8); }
+    .sasha  .card-bg { background: linear-gradient(145deg, #7b2d00, #d4541a, #ff9f43, #ffcc70); }
+    .rita   .card-bg { background: linear-gradient(145deg, #4a0e5c, #9b2fb3, #c77dff); }
+    .alina  .card-bg { background: linear-gradient(145deg, #7b1450, #d63384, #ff7eb3, #ffc2d4); }
+
+    /* GROUP PHOTO */
+    .group-photo-wrap {
+      margin-bottom: 48px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.13);
+      background: linear-gradient(135deg, #1a1228, #3b1f5e, #1a1228);
+      padding: 6px;
+    }
+    .group-photo-inner {
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+    }
+    .group-photo {
+      width: 100%; display: block;
+      max-height: 480px; object-fit: cover;
+      border-radius: 22px;
+      transition: transform 0.4s ease;
+    }
+    .group-photo-wrap:hover .group-photo { transform: scale(1.02); }
+    .group-placeholder {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      height: 260px;
+      border-radius: 22px;
+      border: 2px dashed rgba(245,200,66,0.35);
+      background: rgba(245,200,66,0.04);
+    }
+    .group-placeholder-icon { font-size: 48px; }
+    .group-placeholder-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 18px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 1px;
     }
 
-    .cover a {
-      display: inline-block;
-      padding: 14px 32px;
-      font-size: 20px;
-      font-weight: 600;
-      color: #ff6ec7;
-      background: white;
-      border-radius: 30px;
-      text-decoration: none;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      transition: 0.3s ease;
-      opacity: 0;
-      animation: fadeIn 2s ease forwards;
-    }
-
-    .cover a:hover {
-      transform: scale(1.05);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    /* ПАДАЮЩИЕ ЧАСТИЦЫ */
-    .particle {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.7);
-      animation: fall 8s linear infinite;
-      opacity: 0.8;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(-10vh); opacity: 0; }
-      10% { opacity: 1; }
-      100% { transform: translateY(110vh); opacity: 0; }
-    }
-
-    /* АЛЬБОМ */
-    .wrap {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-
-    h2 {
-      font-size: 32px;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 20px;
-      background: linear-gradient(90deg, #ff6ec7, #4facfe);
-      -webkit-background-clip: text;
-      color: transparent;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-    }
-
-    .section {
-      margin-top: 32px;
-      border-radius: 20px;
-      padding: 18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-      opacity: 0;
-      transform: translateY(25px);
-      animation: slideUp 0.7s ease forwards;
-      background-size: 200% 200%;
-      animation-name: slideUp, gradientMove;
-      animation-duration: 0.7s, 10s;
-      animation-timing-function: ease, linear;
-      animation-iteration-count: 1, infinite;
-    }
-
-    .section:nth-child(2) { animation-delay: .1s, 0s; }
-    .section:nth-child(3) { animation-delay: .2s, 0s; }
-    .section:nth-child(4) { animation-delay: .3s, 0s; }
-    .section:nth-child(5) { animation-delay: .4s, 0s; }
-    .section:nth-child(6) { animation-delay: .5s, 0s; }
-
-    @keyframes slideUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .name {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      background: linear-gradient(90deg, #ff6ec7, #4facfe);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .emoji {
-      text-align: center;
-      margin-top: 10px;
-      opacity: 0;
-      animation: fadeInSong 1s ease forwards;
-      animation-delay: .4s;
-    }
-
-    @keyframes fadeInSong {
-      0% { opacity: 0; transform: translateY(10px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    .emoji a {
-      font-size: 30px;
-      text-decoration: none;
-      transition: 0.3s ease;
-    }
-
-    .emoji a:hover {
-      opacity: 0.7;
-      transform: scale(1.1);
-    }
-
-    img {
-      width: 100%;
-      border-radius: 16px;
-      margin-bottom: 12px;
-      object-fit: cover;
-      transition: 0.35s ease;
-      box-shadow: 0 0 20px rgba(255,255,255,0.4);
-    }
-
-    img:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 30px rgba(255,255,255,0.8);
-    }
-
-    /* ГРАДИЕНТЫ ПОД КАЖДУЮ (АНИМИРУЕМЫЕ) */
-    .stasya-bg {
-      background-image: linear-gradient(135deg, #4facfe, #f9f586);
-    }
-
-    .sasha-bg {
-      background-image: linear-gradient(135deg, #8e5b3a, #ff6b6b);
-    }
-
-    .rita-bg {
-      background-image: linear-gradient(135deg, #c084fc, #a78bfa);
-    }
-
-    .alina-bg {
-      background-image: linear-gradient(135deg, #fef08a, #60a5fa);
-    }
-
-    .end {
-      margin-top: 40px;
-      text-align: center;
-      font-size: 15px;
-      color: #334155;
-      opacity: 0;
-      animation: fadeIn 1.2s ease forwards;
-      animation-delay: .7s;
+    /* FOOTER */
+    .footer-section { text-align: center; margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(0,0,0,0.08); }
+    .footer-section p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 20px; color: #888; }
+    .footer-section span { font-style: normal; font-weight: 700; color: var(--dark); }
+    .footer-hearts { font-size: 28px; margin-top: 12px; display: block; animation: heartbeat 1.8s ease-in-out infinite; }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.2); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.1); }
     }
   </style>
 </head>
-
 <body>
 
-  <!-- ОБЛОЖКА -->
-  <div class="cover">
-    <h1>Последний звонок</h1>
-    <p>маленькая история о нас</p>
-    <a href="#album">войти</a>
+<section class="cover" id="top">
+  <div class="stars" id="stars"></div>
+  <p class="cover-badge">9 Класс · Выпускники</p>
+  <h1 class="cover-title">
+    Последний
+    <span>звонок</span>
+  </h1>
+  <p class="cover-year">2 0 2 6</p>
+  <p class="cover-subtitle">
+    Вы смеялись, учились, дружили —<br>и всё это останется навсегда.<br><br>
+    Это маленькое послание от Яры — с теплом и любовью 🤍
+  </p>
+  <a href="#album" class="cover-btn">открыть 🎓</a>
+  <div class="cover-seal">выпуск</div>
+  <div class="cover-divider"></div>
+</section>
+
+<section class="album" id="album">
+  <h2 class="album-title">Наши моменты</h2>
+
+  <!-- ОБЩАЯ ФОТО -->
+  <div class="group-photo-wrap">
+    <div class="group-photo-inner">
+      <img src="group.jpg" alt="Наша общая фотка" class="group-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="group-placeholder">
+        <span class="group-placeholder-icon">📸</span>
+        <span class="group-placeholder-text">наша общая фотка</span>
+      </div>
+    </div>
   </div>
 
-  <!-- СКРИПТ ДЛЯ ЧАСТИЦ -->
-  <script>
-    for (let i = 0; i < 25; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      p.style.left = Math.random() * 100 + 'vw';
-      p.style.animationDelay = (Math.random() * 8) + 's';
-      p.style.opacity = 0.4 + Math.random() * 0.6;
-      p.style.width = p.style.height = (4 + Math.random() * 8) + 'px';
-      document.querySelector('.cover').appendChild(p);
-    }
-  </script>
-
-  <!-- АЛЬБОМ -->
-  <div id="album" class="wrap">
-
-    <h2>Наши моменты</h2>
-
-    <!-- СТАСЯ -->
-    <div class="section stasya-bg">
-      <div class="name">Стасе</div>
-      <img src="stasya.png">
-      <div class="emoji">
-        <a href="https://music.yandex.ru/track/3963490" target="_blank">💙🦌💛</a>
+  <!-- СТАСЯ -->
+  <div class="card stasya">
+    <div class="card-bg"></div>
+    <div class="card-inner">
+      <img class="card-photo" src="stasya.png" alt="Стася">
+      <div class="card-footer">
+        <div class="card-name">Стася 💙</div>
+        <a class="card-song-btn" href="https://music.yandex.ru/album/4923330/track/28683893" target="_blank">
+          <span class="play-icon"></span>
+          Billie Eilish — ocean eyes
+        </a>
       </div>
     </div>
-
-    <!-- САША -->
-    <div class="section sasha-bg">
-      <div class="name">Саше</div>
-      <img src="sasha.jpg">
-      <div class="emoji">
-        <a href="https://music.yandex.ru/track/81159425" target="_blank">🍫🔥🌺</a>
-      </div>
-    </div>
-
-    <!-- РИТА -->
-    <div class="section rita-bg">
-      <div class="name">Рите</div>
-      <img src="rita.JPG">
-      <div class="emoji">
-        <a href="https://music.yandex.ru/track/208959" target="_blank">💜🌫️🌙</a>
-      </div>
-    </div>
-
-    <!-- АЛИНА -->
-    <div class="section alina-bg">
-      <div class="name">Алине</div>
-      <img src="alina.jpg">
-      <div class="emoji">
-        <a href="https://music.yandex.ru/track/208959" target="_blank">💛😂💙</a>
-      </div>
-    </div>
-
-    <div class="end">
-      сделано с теплом — от Яры
-    </div>
-
   </div>
 
+  <!-- САША -->
+  <div class="card sasha">
+    <div class="card-bg"></div>
+    <div class="card-inner">
+      <img class="card-photo" src="sasha.jpg" alt="Саша">
+      <div class="card-footer">
+        <div class="card-name">Саша 🌅</div>
+        <a class="card-song-btn" href="https://music.yandex.ru/album/3958954/track/31926708" target="_blank">
+          <span class="play-icon"></span>
+          Моана — How Far I'll Go
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- РИТА -->
+  <div class="card rita">
+    <div class="card-bg"></div>
+    <div class="card-inner">
+      <img class="card-photo" src="rita.JPG" alt="Рита">
+      <div class="card-footer">
+        <div class="card-name">Рита 💜</div>
+        <a class="card-song-btn" href="https://music.yandex.ru/album/10432824/track/3616433" target="_blank">
+          <span class="play-icon"></span>
+          Lana Del Rey — Summertime Sadness
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- АЛИНА -->
+  <div class="card alina">
+    <div class="card-bg"></div>
+    <div class="card-inner">
+      <img class="card-photo" src="alina.jpg" alt="Алина">
+      <div class="card-footer">
+        <div class="card-name">Алина 🌸</div>
+        <a class="card-song-btn" href="https://music.yandex.ru/album/9440728/track/61271626" target="_blank">
+          <span class="play-icon"></span>
+          Pharrell — Happy (Despicable Me 2)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-section">
+    <p>сделано с теплом — от <span>Яры</span></p>
+    <span class="footer-hearts">🤍💛🌸</span>
+  </div>
+</section>
+
+<script>
+  // Звёзды
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = 1 + Math.random() * 3;
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${size}px;height:${size}px;--d:${2+Math.random()*4}s;--op:${0.4+Math.random()*0.6};animation-delay:${Math.random()*5}s`;
+    starsEl.appendChild(s);
+  }
+
+  // Конфетти
+  const colors = ['#f5c842','#ff7eb3','#a78bfa','#5eead4','#fb923c'];
+  const cover = document.querySelector('.cover');
+  for (let i = 0; i < 30; i++) {
+    const st = document.createElement('div');
+    st.className = 'streamer';
+    const h = 20 + Math.random() * 60;
+    st.style.cssText = `left:${Math.random()*100}%;height:${h}px;background:${colors[Math.floor(Math.random()*colors.length)]};--dur:${4+Math.random()*6}s;animation-delay:${Math.random()*8}s`;
+    cover.appendChild(st);
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.card').forEach(c => observer.observe(c));
+</script>
 </body>
 </html>
