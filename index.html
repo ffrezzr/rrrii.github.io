@@ -1,527 +1,185 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Последний звонок 🔔</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8" />
+  <title>Последний звонок</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  :root {
-    --rose: #f4a0b0;
-    --lilac: #c9a8d4;
-    --gold: #e8c97a;
-    --cream: #fdf6ee;
-    --dark: #2a1a2e;
-    --blush: #fce4ec;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--cream);
-    font-family: 'Cormorant Garamond', serif;
-    color: var(--dark);
-    overflow-x: hidden;
-  }
-
-  /* CONFETTI CANVAS */
-  #confetti-canvas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 999;
-  }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 40%, #e8eaf6 100%);
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: 
-      radial-gradient(ellipse 60% 40% at 20% 30%, rgba(244,160,176,0.35) 0%, transparent 70%),
-      radial-gradient(ellipse 50% 50% at 80% 70%, rgba(201,168,212,0.3) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 60% at 60% 20%, rgba(232,201,122,0.2) 0%, transparent 70%);
-  }
-
-  .bell-wrap {
-    font-size: 5rem;
-    animation: bellRing 1.2s ease-in-out infinite;
-    transform-origin: top center;
-    line-height: 1;
-    margin-bottom: 1.5rem;
-    filter: drop-shadow(0 4px 16px rgba(232,201,122,0.5));
-  }
-
-  @keyframes bellRing {
-    0%,100% { transform: rotate(-12deg); }
-    50% { transform: rotate(12deg); }
-  }
-
-  .hero-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(3rem, 10vw, 7rem);
-    color: var(--dark);
-    text-align: center;
-    line-height: 1.1;
-    position: relative;
-    z-index: 1;
-    letter-spacing: -0.01em;
-  }
-
-  .hero-title span {
-    background: linear-gradient(135deg, #c05080, #9b59b6, #e67e22);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-subtitle {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: clamp(1.1rem, 3vw, 1.6rem);
-    color: #7a5c7a;
-    margin-top: 1rem;
-    text-align: center;
-    letter-spacing: 0.05em;
-    position: relative;
-    z-index: 1;
-  }
-
-  .names-row {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 2.5rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .name-pill {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    padding: 0.6rem 1.8rem;
-    border-radius: 100px;
-    border: 2px solid;
-    animation: floatPill 3s ease-in-out infinite;
-    backdrop-filter: blur(8px);
-    letter-spacing: 0.04em;
-  }
-
-  .name-pill:nth-child(1) { border-color: #f4a0b0; background: rgba(244,160,176,0.15); color: #9b3060; animation-delay: 0s; }
-  .name-pill:nth-child(2) { border-color: #c9a8d4; background: rgba(201,168,212,0.15); color: #6b3080; animation-delay: 0.4s; }
-  .name-pill:nth-child(3) { border-color: #e8c97a; background: rgba(232,201,122,0.15); color: #8a6010; animation-delay: 0.8s; }
-  .name-pill:nth-child(4) { border-color: #90caf9; background: rgba(144,202,249,0.15); color: #1a5080; animation-delay: 1.2s; }
-
-  @keyframes floatPill {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.8rem;
-    animation: bounce 1.5s ease-in-out infinite;
-    z-index: 1;
-  }
-
-  @keyframes bounce {
-    0%,100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(8px); }
-  }
-
-  /* MESSAGE */
-  .message-section {
-    padding: 6rem 2rem;
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .section-label {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: #c9a8d4;
-    margin-bottom: 1.5rem;
-  }
-
-  .message-text {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.15rem, 2.5vw, 1.5rem);
-    line-height: 1.9;
-    color: #4a3050;
-    font-style: italic;
-  }
-
-  .message-text strong {
-    font-style: normal;
-    color: #9b3060;
-  }
-
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 4rem auto;
-    max-width: 400px;
-  }
-
-  .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #c9a8d4, transparent);
-  }
-
-  .divider-icon { font-size: 1.2rem; }
-
-  /* PHOTO GALLERY */
-  .gallery-section {
-    padding: 2rem 1.5rem 6rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .gallery-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    text-align: center;
-    color: var(--dark);
-    margin-bottom: 3rem;
-  }
-
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto;
-    gap: 1rem;
-  }
-
-  .photo-card {
-    overflow: hidden;
-    border-radius: 16px;
-    position: relative;
-    box-shadow: 0 8px 32px rgba(42,26,46,0.12);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-    cursor: pointer;
-  }
-
-  .photo-card:hover {
-    transform: scale(1.03) rotate(0.5deg);
-    box-shadow: 0 16px 48px rgba(42,26,46,0.22);
-    z-index: 10;
-  }
-
-  .photo-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-  }
-
-  .photo-card:hover img { transform: scale(1.05); }
-
-  .photo-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(42,26,46,0.3) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
-  /* Grid layout – editorial collage */
-  .photo-card:nth-child(1)  { grid-column: 1/6;  grid-row: 1; aspect-ratio: 4/5; }
-  .photo-card:nth-child(2)  { grid-column: 6/9;  grid-row: 1; aspect-ratio: 3/4; }
-  .photo-card:nth-child(3)  { grid-column: 9/13; grid-row: 1; aspect-ratio: 3/4; }
-  .photo-card:nth-child(4)  { grid-column: 1/4;  grid-row: 2; aspect-ratio: 3/4; }
-  .photo-card:nth-child(5)  { grid-column: 4/9;  grid-row: 2; aspect-ratio: 5/4; }
-  .photo-card:nth-child(6)  { grid-column: 9/13; grid-row: 2; aspect-ratio: 4/5; }
-  .photo-card:nth-child(7)  { grid-column: 1/5;  grid-row: 3; aspect-ratio: 4/5; }
-  .photo-card:nth-child(8)  { grid-column: 5/9;  grid-row: 3; aspect-ratio: 4/5; }
-  .photo-card:nth-child(9)  { grid-column: 9/13; grid-row: 3; aspect-ratio: 4/5; }
-  .photo-card:nth-child(10) { grid-column: 1/5;  grid-row: 4; aspect-ratio: 4/5; }
-  .photo-card:nth-child(11) { grid-column: 5/9;  grid-row: 4; aspect-ratio: 4/5; }
-  .photo-card:nth-child(12) { grid-column: 9/13; grid-row: 4; aspect-ratio: 4/5; }
-
-  /* slight tilts for charm */
-  .photo-card:nth-child(1)  { transform: rotate(-1deg); }
-  .photo-card:nth-child(3)  { transform: rotate(1.2deg); }
-  .photo-card:nth-child(5)  { transform: rotate(-0.8deg); }
-  .photo-card:nth-child(7)  { transform: rotate(1deg); }
-  .photo-card:nth-child(10) { transform: rotate(-1.2deg); }
-  .photo-card:nth-child(12) { transform: rotate(0.9deg); }
-
-  .photo-card:nth-child(1):hover,
-  .photo-card:nth-child(3):hover,
-  .photo-card:nth-child(5):hover,
-  .photo-card:nth-child(7):hover,
-  .photo-card:nth-child(10):hover,
-  .photo-card:nth-child(12):hover {
-    transform: scale(1.03) rotate(0deg);
-  }
-
-  /* LIGHTBOX */
-  .lightbox {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(42,26,46,0.92);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(8px);
-  }
-
-  .lightbox.active { display: flex; }
-
-  .lightbox img {
-    max-width: 90vw;
-    max-height: 90vh;
-    border-radius: 12px;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
-    animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  @keyframes popIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-
-  .lightbox-close {
-    position: absolute;
-    top: 1.5rem; right: 2rem;
-    font-size: 2.5rem;
-    color: white;
-    cursor: pointer;
-    line-height: 1;
-    transition: transform 0.2s;
-  }
-
-  .lightbox-close:hover { transform: rotate(90deg) scale(1.2); }
-
-  /* FOOTER */
-  .footer {
-    padding: 4rem 2rem;
-    text-align: center;
-    background: linear-gradient(135deg, #2a1a2e, #3d1f4a);
-    color: white;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .footer::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(244,160,176,0.15) 0%, transparent 70%);
-  }
-
-  .footer-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    margin-bottom: 1.5rem;
-    background: linear-gradient(135deg, #f4a0b0, #c9a8d4, #e8c97a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    position: relative;
-    z-index: 1;
-  }
-
-  .footer-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    font-style: italic;
-    color: rgba(255,255,255,0.75);
-    max-width: 500px;
-    margin: 0 auto;
-    line-height: 1.8;
-    position: relative;
-    z-index: 1;
-  }
-
-  .footer-hearts {
-    margin-top: 2rem;
-    font-size: 2rem;
-    position: relative;
-    z-index: 1;
-    animation: heartbeat 1.5s ease-in-out infinite;
-  }
-
-  @keyframes heartbeat {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-  }
-
-  /* FADE-IN ON SCROLL */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  @media (max-width: 768px) {
-    .gallery-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 0.7rem;
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      overflow-x: hidden;
     }
-    .photo-card:nth-child(n) {
-      grid-column: auto !important;
-      grid-row: auto !important;
-      aspect-ratio: 1 / 1;
+
+    /* Праздничные блёстки */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
     }
-    .photo-card:nth-child(1) { grid-column: 1 / 3 !important; aspect-ratio: 16/9; }
-    .photo-card:nth-child(12) { grid-column: 1 / 3 !important; aspect-ratio: 16/9; }
-  }
-</style>
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 50%;
+      animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 0.7; }
+      100% { transform: translateY(-120vh) scale(0.4); opacity: 0; }
+    }
+
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 34px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .section {
+      margin-top: 40px;
+      border: 1px solid rgba(148,163,184,0.3);
+      border-radius: 16px;
+      padding: 20px;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 0.9s ease forwards;
+    }
+
+    .section:nth-child(2) { animation-delay: .2s; }
+    .section:nth-child(3) { animation-delay: .35s; }
+    .section:nth-child(4) { animation-delay: .5s; }
+    .section:nth-child(5) { animation-delay: .65s; }
+    .section:nth-child(6) { animation-delay: .8s; }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .name {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: #cbd5e1;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 14px;
+      margin-bottom: 14px;
+      object-fit: cover;
+      transform: scale(0.97);
+      transition: 0.4s ease;
+    }
+
+    img:hover {
+      transform: scale(1);
+      filter: brightness(1.1);
+    }
+
+    .emoji {
+      font-size: 26px;
+      text-align: center;
+      margin-top: 6px;
+    }
+
+    .end {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 14px;
+      color: #94a3b8;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards;
+      animation-delay: 1.2s;
+    }
+  </style>
 </head>
+
 <body>
 
-<canvas id="confetti-canvas"></canvas>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="bell-wrap">🔔</div>
-  <h1 class="hero-title">Последний<br><span>звонок!</span></h1>
-  <p class="hero-subtitle">с последним звонком! 🎉</p>
-  <div class="names-row">
-    <span class="name-pill">Стася</span>
-    <span class="name-pill">Ритуля</span>
-    <span class="name-pill">Саша</span>
-    <span class="name-pill">Алина</span>
+  <!-- Блёстки -->
+  <div class="particles">
+    <script>
+      for (let i = 0; i < 40; i++) {
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.top = Math.random() * 100 + "vh";
+        p.style.animationDelay = Math.random() * 6 + "s";
+        p.style.opacity = 0.3 + Math.random() * 0.5;
+        document.querySelector(".particles").appendChild(p);
+      }
+    </script>
   </div>
-  <div class="scroll-hint">↓</div>
-</section>
 
-<!-- GALLERY -->
-<section class="gallery-section reveal">
-  <div class="gallery-grid" id="gallery">
-    <div class="photo-card"><img src="/mnt/user-data/uploads/IMG_6869.jpeg" alt="фото"></div>
-    <div class="photo-card"><img src="/mnt/user-data/uploads/IMG_4490.jpeg" alt="фото"></div>
-    <div class="photo-card"><img src="/mnt/user-data/uploads/IMG_4663.jpeg" alt="фото"></div>
-    <div class="photo-card"><img src="/mnt/user-data/uploads/IMG_4677.jpeg" alt="фото"></div>
-    <div class="photo-card"><img src="/mnt/user-data/uploads/IMG_4695.jpeg" alt="фото"></div>
-    <div class="photo-card"><img src="/mnt/user-data/uploads/IMG_1032.jpeg" alt="фото"></div>
-    <div class="photo-card"><img src="/mnt/user-data/uploads/IMG_0378.jpeg" alt="фото"></div>
-    <div class="photo-card"><img src="/mnt/user-data/uploads/IMG_8749.jpeg" alt="фото"></div>
-    <div class="photo-card"><img src="/mnt/user-data/uploads/IMG_6652.jpeg" alt="фото"></div>
-    <div class="photo-card"><img src="/mnt/user-data/uploads/IMG_9323.jpeg" alt="фото"></div>
-    <div class="photo-card"><img src="/mnt/user-data/uploads/IMG_9044.jpeg" alt="фото"></div>
-    <div class="photo-card"><img src="/mnt/user-data/uploads/IMG_4285.jpeg" alt="фото"></div>
+  <div class="wrap">
+
+    <h1>Последний звонок</h1>
+
+    <!-- СТАСЯ -->
+    <div class="section">
+      <div class="name">Стасе</div>
+      <img src="stasya.jpg" alt="Стасе и Яра">
+      <div class="emoji">✨💙🌸</div>
+    </div>
+
+    <!-- САША -->
+    <div class="section">
+      <div class="name">Саше</div>
+      <img src="sasha.jpg" alt="Саша и Яра">
+      <div class="emoji">🔥😎💫</div>
+    </div>
+
+    <!-- РИТА -->
+    <div class="section">
+      <div class="name">Рите</div>
+      <img src="rita.jpg" alt="Рита и Яра">
+      <div class="emoji">🌿🤍🌙</div>
+    </div>
+
+    <!-- АЛИНА -->
+    <div class="section">
+      <div class="name">Алине</div>
+      <img src="alina.jpg" alt="Алина и Яра">
+      <div class="emoji">⭐📸💛</div>
+    </div>
+
+    <!-- ВСЕ ВМЕСТЕ -->
+    <div class="section">
+      <div class="name">Мы все вместе</div>
+      <img src="all.jpg" alt="Все вместе">
+      <div class="emoji">💞🎉👭👭</div>
+    </div>
+
+    <div class="end">
+      сделано с теплом — от Яры
+    </div>
+
   </div>
-</section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <h2 class="footer-title">с любовью, Яра 🤍</h2>
-  <div class="footer-hearts">💖 💜 💛 💙</div>
-</footer>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <span class="lightbox-close" id="lbClose">✕</span>
-  <img src="" id="lbImg" alt="">
-</div>
-
-<script>
-// ---- CONFETTI ----
-const canvas = document.getElementById('confetti-canvas');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-window.addEventListener('resize', () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
-
-const COLORS = ['#f4a0b0','#c9a8d4','#e8c97a','#90caf9','#a5d6a7','#ef9a9a'];
-const pieces = Array.from({length: 80}, () => ({
-  x: Math.random() * canvas.width,
-  y: Math.random() * canvas.height - canvas.height,
-  r: Math.random() * 7 + 3,
-  d: Math.random() * 4 + 1,
-  color: COLORS[Math.floor(Math.random() * COLORS.length)],
-  tilt: Math.random() * 10 - 10,
-  tiltAngle: 0,
-  tiltSpeed: Math.random() * 0.1 + 0.05,
-  shape: Math.random() > 0.5 ? 'circle' : 'rect',
-  opacity: Math.random() * 0.6 + 0.4,
-}));
-
-let angle = 0;
-function drawConfetti() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  angle += 0.01;
-  pieces.forEach(p => {
-    p.tiltAngle += p.tiltSpeed;
-    p.y += (Math.cos(angle + p.d) + p.d) * 0.7;
-    p.x += Math.sin(angle) * 1.5;
-    p.tilt = Math.sin(p.tiltAngle) * 12;
-    ctx.globalAlpha = p.opacity;
-    ctx.fillStyle = p.color;
-    ctx.beginPath();
-    if (p.shape === 'circle') {
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    } else {
-      ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.tilt * Math.PI / 180);
-      ctx.fillRect(-p.r, -p.r/2, p.r*2, p.r);
-      ctx.restore();
-      ctx.globalAlpha = 0;
-    }
-    ctx.fill();
-    if (p.y > canvas.height + 20) {
-      p.y = -10;
-      p.x = Math.random() * canvas.width;
-    }
-  });
-  ctx.globalAlpha = 1;
-  requestAnimationFrame(drawConfetti);
-}
-drawConfetti();
-
-// ---- LIGHTBOX ----
-const lightbox = document.getElementById('lightbox');
-const lbImg = document.getElementById('lbImg');
-document.querySelectorAll('.photo-card img').forEach(img => {
-  img.addEventListener('click', () => {
-    lbImg.src = img.src;
-    lightbox.classList.add('active');
-  });
-});
-document.getElementById('lbClose').addEventListener('click', () => lightbox.classList.remove('active'));
-lightbox.addEventListener('click', e => { if(e.target === lightbox) lightbox.classList.remove('active'); });
-
-// ---- SCROLL REVEAL ----
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
 </body>
 </html>
