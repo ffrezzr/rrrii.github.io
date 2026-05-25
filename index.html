@@ -12,6 +12,7 @@
       background: #f5f7fa;
       color: #1e293b;
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
     /* ОБЛОЖКА */
@@ -25,6 +26,8 @@
       text-align: center;
       padding: 20px;
       color: white;
+      position: relative;
+      overflow: hidden;
     }
 
     .cover h1 {
@@ -66,6 +69,23 @@
       to { opacity: 1; }
     }
 
+    /* ПАДАЮЩИЕ ЧАСТИЦЫ */
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.7);
+      animation: fall 8s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10vh); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(110vh); opacity: 0; }
+    }
+
     /* АЛЬБОМ */
     .wrap {
       max-width: 900px;
@@ -87,26 +107,36 @@
 
     .section {
       margin-top: 32px;
-      background: white;
       border-radius: 20px;
       padding: 18px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.12);
       opacity: 0;
       transform: translateY(25px);
       animation: slideUp 0.7s ease forwards;
+      background-size: 200% 200%;
+      animation-name: slideUp, gradientMove;
+      animation-duration: 0.7s, 10s;
+      animation-timing-function: ease, linear;
+      animation-iteration-count: 1, infinite;
     }
 
-    .section:nth-child(2) { animation-delay: .1s; }
-    .section:nth-child(3) { animation-delay: .2s; }
-    .section:nth-child(4) { animation-delay: .3s; }
-    .section:nth-child(5) { animation-delay: .4s; }
-    .section:nth-child(6) { animation-delay: .5s; }
+    .section:nth-child(2) { animation-delay: .1s, 0s; }
+    .section:nth-child(3) { animation-delay: .2s, 0s; }
+    .section:nth-child(4) { animation-delay: .3s, 0s; }
+    .section:nth-child(5) { animation-delay: .4s, 0s; }
+    .section:nth-child(6) { animation-delay: .5s, 0s; }
 
     @keyframes slideUp {
       to {
         opacity: 1;
         transform: translateY(0);
       }
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .name {
@@ -118,24 +148,59 @@
       color: transparent;
     }
 
+    .emoji {
+      text-align: center;
+      margin-top: 10px;
+      opacity: 0;
+      animation: fadeInSong 1s ease forwards;
+      animation-delay: .4s;
+    }
+
+    @keyframes fadeInSong {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .emoji a {
+      font-size: 30px;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+
+    .emoji a:hover {
+      opacity: 0.7;
+      transform: scale(1.1);
+    }
+
     img {
       width: 100%;
       border-radius: 16px;
       margin-bottom: 12px;
       object-fit: cover;
       transition: 0.35s ease;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 0 20px rgba(255,255,255,0.4);
     }
 
     img:hover {
       transform: scale(1.03);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      box-shadow: 0 0 30px rgba(255,255,255,0.8);
     }
 
-    .emoji {
-      font-size: 28px;
-      text-align: center;
-      padding-bottom: 4px;
+    /* ГРАДИЕНТЫ ПОД КАЖДУЮ (АНИМИРУЕМЫЕ) */
+    .stasya-bg {
+      background-image: linear-gradient(135deg, #4facfe, #f9f586);
+    }
+
+    .sasha-bg {
+      background-image: linear-gradient(135deg, #8e5b3a, #ff6b6b);
+    }
+
+    .rita-bg {
+      background-image: linear-gradient(135deg, #c084fc, #a78bfa);
+    }
+
+    .alina-bg {
+      background-image: linear-gradient(135deg, #fef08a, #60a5fa);
     }
 
     .end {
@@ -159,39 +224,58 @@
     <a href="#album">войти</a>
   </div>
 
+  <!-- СКРИПТ ДЛЯ ЧАСТИЦ -->
+  <script>
+    for (let i = 0; i < 25; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDelay = (Math.random() * 8) + 's';
+      p.style.opacity = 0.4 + Math.random() * 0.6;
+      p.style.width = p.style.height = (4 + Math.random() * 8) + 'px';
+      document.querySelector('.cover').appendChild(p);
+    }
+  </script>
+
   <!-- АЛЬБОМ -->
   <div id="album" class="wrap">
 
     <h2>Наши моменты</h2>
 
-    <div class="section">
+    <!-- СТАСЯ -->
+    <div class="section stasya-bg">
       <div class="name">Стасе</div>
-      <img src="stasya.png" alt="Стасе и Яра">
-      <div class="emoji">💗✨🌸</div>
+      <img src="stasya.png">
+      <div class="emoji">
+        <a href="https://music.yandex.ru/track/3963490" target="_blank">💙🦌💛</a>
+      </div>
     </div>
 
-    <div class="section">
+    <!-- САША -->
+    <div class="section sasha-bg">
       <div class="name">Саше</div>
-      <img src="sasha.jpg" alt="Саша и Яра">
-      <div class="emoji">🔥💥😎</div>
+      <img src="sasha.jpg">
+      <div class="emoji">
+        <a href="https://music.yandex.ru/track/81159425" target="_blank">🍫🔥🌺</a>
+      </div>
     </div>
 
-    <div class="section">
+    <!-- РИТА -->
+    <div class="section rita-bg">
       <div class="name">Рите</div>
-      <img src="rita.JPG" alt="Рита и Яра">
-      <div class="emoji">🌿🤍🌙</div>
+      <img src="rita.JPG">
+      <div class="emoji">
+        <a href="https://music.yandex.ru/track/208959" target="_blank">💜🌫️🌙</a>
+      </div>
     </div>
 
-    <div class="section">
+    <!-- АЛИНА -->
+    <div class="section alina-bg">
       <div class="name">Алине</div>
-      <img src="alina.jpg" alt="Алина и Яра">
-      <div class="emoji">⭐📸💛</div>
-    </div>
-
-    <div class="section">
-      <div class="name">Мы все вместе</div>
-      <img src="all.jpg" alt="Все вместе">
-      <div class="emoji">💞🎉👭👭</div>
+      <img src="alina.jpg">
+      <div class="emoji">
+        <a href="https://music.yandex.ru/track/208959" target="_blank">💛😂💙</a>
+      </div>
     </div>
 
     <div class="end">
