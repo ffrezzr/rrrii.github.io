@@ -12,17 +12,12 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'Nunito', sans-serif; background: var(--soft-white); color: var(--dark); overflow-x: hidden; }
 
-    /* COVER */
+    /* ── COVER ─────────────────────────────────────────────── */
     .cover {
       position: relative;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 24px;
-      overflow: hidden;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 40px 24px; overflow: hidden;
       background: radial-gradient(ellipse at 20% 30%, #3b1f5e 0%, #1a1228 55%, #0d0a1a 100%);
     }
     .stars { position: absolute; inset: 0; pointer-events: none; }
@@ -44,172 +39,107 @@
       90%  { opacity: 0.6; }
       100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
     }
-    .cover-badge {
-      font-weight: 300; font-size: 13px; letter-spacing: 5px;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 18px;
-      opacity: 0; animation: riseUp 1s ease forwards 0.3s;
-    }
-    .cover-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(52px, 12vw, 110px); font-weight: 700;
-      line-height: 1; color: #fff;
-      opacity: 0; animation: riseUp 1s ease forwards 0.6s;
-    }
-    .cover-title span {
-      display: block; font-style: italic; font-weight: 400;
-      font-size: clamp(36px, 8vw, 72px);
-      background: linear-gradient(90deg, #f5c842, #ff7eb3, #a78bfa);
-      -webkit-background-clip: text; color: transparent; margin-top: 4px;
-    }
-    .cover-year {
-      font-size: 18px; font-weight: 700; letter-spacing: 8px;
-      color: rgba(255,255,255,0.35); margin-top: 16px;
-      opacity: 0; animation: riseUp 1s ease forwards 0.9s;
-    }
-    .cover-subtitle {
-      margin-top: 32px; font-size: 17px; font-weight: 300;
-      color: rgba(255,255,255,0.65); max-width: 380px; line-height: 1.7;
-      opacity: 0; animation: riseUp 1s ease forwards 1.2s;
-    }
-    .cover-btn {
-      display: inline-block; margin-top: 48px; padding: 16px 48px;
-      font-size: 15px; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; text-decoration: none; color: var(--dark);
-      background: linear-gradient(135deg, #f5c842, #ff9f43);
-      border-radius: 60px; box-shadow: 0 0 40px rgba(245,200,66,0.45);
-      opacity: 0; animation: riseUp 1s ease forwards 1.5s;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
+    .cover-badge { font-weight: 300; font-size: 13px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; opacity: 0; animation: riseUp 1s ease forwards 0.3s; }
+    .cover-title { font-family: 'Playfair Display', serif; font-size: clamp(52px, 12vw, 110px); font-weight: 700; line-height: 1; color: #fff; opacity: 0; animation: riseUp 1s ease forwards 0.6s; }
+    .cover-title span { display: block; font-style: italic; font-weight: 400; font-size: clamp(36px, 8vw, 72px); background: linear-gradient(90deg, #f5c842, #ff7eb3, #a78bfa); -webkit-background-clip: text; color: transparent; margin-top: 4px; }
+    .cover-year { font-size: 18px; font-weight: 700; letter-spacing: 8px; color: rgba(255,255,255,0.35); margin-top: 16px; opacity: 0; animation: riseUp 1s ease forwards 0.9s; }
+    .cover-subtitle { margin-top: 32px; font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.65); max-width: 380px; line-height: 1.7; opacity: 0; animation: riseUp 1s ease forwards 1.2s; }
+    .cover-btn { display: inline-block; margin-top: 48px; padding: 16px 48px; font-size: 15px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; color: var(--dark); background: linear-gradient(135deg, #f5c842, #ff9f43); border-radius: 60px; box-shadow: 0 0 40px rgba(245,200,66,0.45); opacity: 0; animation: riseUp 1s ease forwards 1.5s; transition: transform 0.3s, box-shadow 0.3s; }
     .cover-btn:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 0 60px rgba(245,200,66,0.7); }
-    .cover-divider {
-      position: absolute; bottom: 0; left: 0; width: 100%; height: 80px;
-      background: var(--soft-white); clip-path: ellipse(60% 100% at 50% 100%);
-    }
-    .cover-seal {
-      position: absolute; bottom: 100px; right: clamp(20px, 6vw, 80px);
-      width: 100px; height: 100px; border-radius: 50%;
-      border: 2px solid rgba(245,200,66,0.4);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      font-size: 11px; color: var(--gold); letter-spacing: 1px;
-      opacity: 0; animation: riseUp 1s ease forwards 1.8s;
-    }
+    .cover-divider { position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; background: var(--soft-white); clip-path: ellipse(60% 100% at 50% 100%); }
+    .cover-seal { position: absolute; bottom: 100px; right: clamp(20px, 6vw, 80px); width: 100px; height: 100px; border-radius: 50%; border: 2px solid rgba(245,200,66,0.4); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; color: var(--gold); letter-spacing: 1px; opacity: 0; animation: riseUp 1s ease forwards 1.8s; }
     .cover-seal::before { content: '✦'; font-size: 28px; display: block; }
-    @keyframes riseUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
+    @keyframes riseUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── ALBUM SECTION (animated bg) ───────────────────────── */
+    .album {
+      position: relative;
+      max-width: 780px; margin: 0 auto; padding: 60px 24px 80px;
+      z-index: 1;
     }
 
-    /* ALBUM */
-    .album { max-width: 780px; margin: 0 auto; padding: 60px 24px 80px; }
-    .album-title { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; text-align: center; margin-bottom: 48px; }
+    /* Subtle drifting blobs — very faint */
+    .album-bg {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .blob {
+      position: absolute; border-radius: 50%; filter: blur(110px);
+      animation: blobDrift var(--bd, 30s) ease-in-out infinite alternate;
+      opacity: 0.07;
+    }
+    .blob-1 { width: 600px; height: 600px; background: #4facfe; top: -200px; left: -200px; --bd: 34s; }
+    .blob-2 { width: 500px; height: 500px; background: #ff7eb3; top: 35%; right: -200px; --bd: 40s; animation-delay: -14s; }
+    .blob-3 { width: 460px; height: 460px; background: #f5c842; bottom: 0; left: 5%; --bd: 28s; animation-delay: -6s; }
+    @keyframes blobDrift {
+      0%   { transform: translate(0, 0); }
+      100% { transform: translate(30px, -20px); }
+    }
 
-    /* CARDS */
+    .album-title { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; text-align: center; margin-bottom: 48px; position: relative; z-index: 1; }
+
+    /* ── CARDS ──────────────────────────────────────────────── */
+    .card-wrap {
+      position: relative; margin-bottom: 36px;
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .card-wrap.visible { opacity: 1; transform: translateY(0); }
+
+    /* Subtle glow aura behind each card */
+    .card-aura {
+      position: absolute; inset: -16px; border-radius: 44px;
+      filter: blur(28px); opacity: 0; z-index: 0;
+      transition: opacity 0.5s ease;
+    }
+    .card-wrap:hover .card-aura { opacity: 0.28; }
+    .stasya .card-aura  { background: #89d8f8; }
+    .sasha  .card-aura  { background: #ffcc70; }
+    .rita   .card-aura  { background: #c77dff; }
+    .alina  .card-aura  { background: #ffc2d4; }
+
     .card {
       position: relative; border-radius: 28px; overflow: hidden;
-      margin-bottom: 36px; box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-      opacity: 0; transform: translateY(40px);
-      transition: opacity 0.7s ease, transform 0.7s ease, box-shadow 0.3s;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12); z-index: 1;
+      transition: box-shadow 0.3s, transform 0.3s;
     }
-    .card.visible { opacity: 1; transform: translateY(0); }
-    .card:hover { box-shadow: 0 30px 80px rgba(0,0,0,0.18); }
+    .card-wrap:hover .card { box-shadow: 0 30px 80px rgba(0,0,0,0.22); transform: translateY(-4px); }
     .card-bg { position: absolute; inset: 0; z-index: 0; }
     .card-inner { position: relative; z-index: 1; padding: 28px; }
-    .card-photo {
-      width: 100%; border-radius: 18px; display: block;
-      object-fit: cover; max-height: 420px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
-      transition: transform 0.4s ease;
-    }
-    .card:hover .card-photo { transform: scale(1.02); }
-    .card-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: 20px; flex-wrap: wrap; gap: 12px;
-    }
-    .card-name {
-      font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700;
-      color: white; text-shadow: 0 2px 12px rgba(0,0,0,0.3);
-    }
-    .card-song-btn {
-      display: flex; align-items: center; gap: 10px; padding: 12px 22px;
-      background: rgba(255,255,255,0.18); backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.3); border-radius: 50px;
-      text-decoration: none; color: white; font-size: 13px; font-weight: 600;
-      letter-spacing: 0.5px; transition: background 0.3s, transform 0.2s;
-      max-width: 100%;
-    }
+    .card-photo { width: 100%; border-radius: 18px; display: block; object-fit: cover; max-height: 420px; box-shadow: 0 8px 32px rgba(0,0,0,0.25); transition: transform 0.4s ease; }
+    .card-wrap:hover .card-photo { transform: scale(1.02); }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; flex-wrap: wrap; gap: 12px; }
+    .card-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: white; text-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+    .card-song-btn { display: flex; align-items: center; gap: 10px; padding: 12px 22px; background: rgba(255,255,255,0.18); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.3); border-radius: 50px; text-decoration: none; color: white; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; transition: background 0.3s, transform 0.2s; max-width: 100%; }
     .card-song-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.04); }
-    .play-icon {
-      width: 30px; height: 30px; background: white; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
-    .play-icon::after {
-      content: ''; display: block; width: 0; height: 0; border-style: solid;
-      border-width: 5px 0 5px 9px; border-color: transparent transparent transparent #333;
-      margin-left: 2px;
-    }
+    .play-icon { width: 30px; height: 30px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .play-icon::after { content: ''; display: block; width: 0; height: 0; border-style: solid; border-width: 5px 0 5px 9px; border-color: transparent transparent transparent #333; margin-left: 2px; }
 
-    /* CARD GRADIENTS */
+    /* Card gradients */
     .stasya .card-bg { background: linear-gradient(145deg, #1d4e89, #4facfe, #89d8f8); }
     .sasha  .card-bg { background: linear-gradient(145deg, #7b2d00, #d4541a, #ff9f43, #ffcc70); }
     .rita   .card-bg { background: linear-gradient(145deg, #4a0e5c, #9b2fb3, #c77dff); }
     .alina  .card-bg { background: linear-gradient(145deg, #7b1450, #d63384, #ff7eb3, #ffc2d4); }
 
-    /* GROUP PHOTO */
-    .group-photo-wrap {
-      margin-bottom: 48px;
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.13);
-      background: linear-gradient(135deg, #1a1228, #3b1f5e, #1a1228);
-      padding: 6px;
-    }
-    .group-photo-inner {
-      border-radius: 22px;
-      overflow: hidden;
-      position: relative;
-    }
-    .group-photo {
-      width: 100%; display: block;
-      max-height: 480px; object-fit: cover;
-      border-radius: 22px;
-      transition: transform 0.4s ease;
-    }
+    /* ── GROUP PHOTO ────────────────────────────────────────── */
+    .group-photo-wrap { margin-bottom: 48px; border-radius: 28px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.13); background: linear-gradient(135deg, #1a1228, #3b1f5e, #1a1228); padding: 6px; position: relative; z-index: 1; }
+    .group-photo-inner { border-radius: 22px; overflow: hidden; position: relative; }
+    .group-photo { width: 100%; display: block; max-height: 480px; object-fit: cover; border-radius: 22px; transition: transform 0.4s ease; }
     .group-photo-wrap:hover .group-photo { transform: scale(1.02); }
-    .group-placeholder {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      height: 260px;
-      border-radius: 22px;
-      border: 2px dashed rgba(245,200,66,0.35);
-      background: rgba(245,200,66,0.04);
-    }
+    .group-placeholder { display: none; flex-direction: column; align-items: center; justify-content: center; gap: 12px; height: 260px; border-radius: 22px; border: 2px dashed rgba(245,200,66,0.35); background: rgba(245,200,66,0.04); }
     .group-placeholder-icon { font-size: 48px; }
-    .group-placeholder-text {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 18px;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 1px;
-    }
+    .group-placeholder-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; color: rgba(255,255,255,0.4); letter-spacing: 1px; }
 
-    /* FOOTER */
-    .footer-section { text-align: center; margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(0,0,0,0.08); }
+    /* ── FOOTER ─────────────────────────────────────────────── */
+    .footer-section { text-align: center; margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(0,0,0,0.08); position: relative; z-index: 1; }
     .footer-section p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 20px; color: #888; }
     .footer-section span { font-style: normal; font-weight: 700; color: var(--dark); }
     .footer-hearts { font-size: 28px; margin-top: 12px; display: block; animation: heartbeat 1.8s ease-in-out infinite; }
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      15% { transform: scale(1.2); }
-      30% { transform: scale(1); }
-      45% { transform: scale(1.1); }
-    }
+    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.2); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
   </style>
 </head>
 <body>
 
+<!-- ── COVER ── -->
 <section class="cover" id="top">
   <div class="stars" id="stars"></div>
   <p class="cover-badge">9 Класс · Выпускники</p>
@@ -227,76 +157,96 @@
   <div class="cover-divider"></div>
 </section>
 
+<!-- ── ANIMATED BG LAYER ── -->
+<div class="album-bg">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<!-- ── ALBUM ── -->
 <section class="album" id="album">
   <h2 class="album-title">Наши моменты</h2>
 
-  <!-- ОБЩАЯ ФОТО -->
-  <div class="all-photo-wrap">
-    <div class="all-photo-inner">
+  <!-- Общая фото -->
+  <div class="group-photo-wrap">
+    <div class="group-photo-inner">
       <img src="all.png" alt="Наша общая фотка" class="group-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="all-placeholder">
-        <span class="all-placeholder-icon">📸</span>
-        <span class="all-placeholder-text">наша общая фотка</span>
+      <div class="group-placeholder">
+        <span class="group-placeholder-icon">📸</span>
+        <span class="group-placeholder-text">наша общая фотка</span>
       </div>
     </div>
   </div>
 
   <!-- СТАСЯ -->
-  <div class="card stasya">
-    <div class="card-bg"></div>
-    <div class="card-inner">
-      <img class="card-photo" src="stasya .png" alt="Стася">
-      <div class="card-footer">
-        <div class="card-name">Стася 💙</div>
-        <a class="card-song-btn" href="https://music.yandex.ru/album/4923330/track/28683893" target="_blank">
-          <span class="play-icon"></span>
-          Billie Eilish — ocean eyes
-        </a>
+  <div class="card-wrap stasya">
+    <div class="card-aura"></div>
+    <div class="card">
+      <div class="card-bg"></div>
+      <div class="card-inner">
+        <img class="card-photo" src="stasya .png" alt="Стася">
+        <div class="card-footer">
+          <div class="card-name">Стася 💙</div>
+          <a class="card-song-btn" href="https://music.yandex.ru/album/4923330/track/28683893" target="_blank">
+            <span class="play-icon"></span>
+            Billie Eilish — ocean eyes
+          </a>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- САША -->
-  <div class="card sasha">
-    <div class="card-bg"></div>
-    <div class="card-inner">
-      <img class="card-photo" src="sasha.jpg" alt="Саша">
-      <div class="card-footer">
-        <div class="card-name">Саша 🌅</div>
-        <a class="card-song-btn" href="https://music.yandex.ru/album/3958954/track/31926708" target="_blank">
-          <span class="play-icon"></span>
-          Моана — How Far I'll Go
-        </a>
+  <div class="card-wrap sasha">
+    <div class="card-aura"></div>
+    <div class="card">
+      <div class="card-bg"></div>
+      <div class="card-inner">
+        <img class="card-photo" src="sasha.jpg" alt="Саша">
+        <div class="card-footer">
+          <div class="card-name">Саша 🌅</div>
+          <a class="card-song-btn" href="https://music.yandex.ru/album/3958954/track/31926708" target="_blank">
+            <span class="play-icon"></span>
+            Моана — How Far I'll Go
+          </a>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- РИТА -->
-  <div class="card rita">
-    <div class="card-bg"></div>
-    <div class="card-inner">
-      <img class="card-photo" src="rita.JPG" alt="Рита">
-      <div class="card-footer">
-        <div class="card-name">Рита 💜</div>
-        <a class="card-song-btn" href="https://music.yandex.ru/album/10432824/track/3616433" target="_blank">
-          <span class="play-icon"></span>
-          Lana Del Rey — Summertime Sadness
-        </a>
+  <div class="card-wrap rita">
+    <div class="card-aura"></div>
+    <div class="card">
+      <div class="card-bg"></div>
+      <div class="card-inner">
+        <img class="card-photo" src="rita.JPG" alt="Рита">
+        <div class="card-footer">
+          <div class="card-name">Рита 💜</div>
+          <a class="card-song-btn" href="https://music.yandex.ru/album/10432824/track/3616433" target="_blank">
+            <span class="play-icon"></span>
+            Lana Del Rey — Summertime Sadness
+          </a>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- АЛИНА -->
-  <div class="card alina">
-    <div class="card-bg"></div>
-    <div class="card-inner">
-      <img class="card-photo" src="alina.JPG" alt="Алина">
-      <div class="card-footer">
-        <div class="card-name">Алина 🌸</div>
-        <a class="card-song-btn" href="https://music.yandex.ru/album/9440728/track/61271626" target="_blank">
-          <span class="play-icon"></span>
-          Pharrell — Happy (Despicable Me 2)
-        </a>
+  <div class="card-wrap alina">
+    <div class="card-aura"></div>
+    <div class="card">
+      <div class="card-bg"></div>
+      <div class="card-inner">
+        <img class="card-photo" src="alina.JPG" alt="Алина">
+        <div class="card-footer">
+          <div class="card-name">Алина 🌸</div>
+          <a class="card-song-btn" href="https://music.yandex.ru/album/29005064/track/114780508" target="_blank">
+            <span class="play-icon"></span>
+            Pharrell Williams — Happy (Minions)
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -308,7 +258,7 @@
 </section>
 
 <script>
-  // Звёзды
+  // Stars
   const starsEl = document.getElementById('stars');
   for (let i = 0; i < 120; i++) {
     const s = document.createElement('div');
@@ -318,7 +268,7 @@
     starsEl.appendChild(s);
   }
 
-  // Конфетти
+  // Confetti streamers on cover
   const colors = ['#f5c842','#ff7eb3','#a78bfa','#5eead4','#fb923c'];
   const cover = document.querySelector('.cover');
   for (let i = 0; i < 30; i++) {
@@ -329,11 +279,11 @@
     cover.appendChild(st);
   }
 
-  // Scroll reveal
+  // Scroll reveal for cards
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-  }, { threshold: 0.15 });
-  document.querySelectorAll('.card').forEach(c => observer.observe(c));
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.card-wrap').forEach(c => observer.observe(c));
 </script>
 </body>
 </html>
