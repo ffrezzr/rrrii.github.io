@@ -10,13 +10,62 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root { --gold: #f5c842; --pink: #ff7eb3; --soft-white: #fffdf7; --dark: #1a1228; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Nunito', sans-serif; background: var(--soft-white); color: var(--dark); overflow-x: hidden; }
+    body {
+      font-family: 'Nunito', sans-serif; color: var(--dark); overflow-x: hidden;
+      background: linear-gradient(160deg,
+        #fff0fa 0%, #f0f7ff 25%, #fff8e8 50%, #f3f0ff 75%, #fff0f5 100%);
+      background-size: 400% 400%;
+      animation: bgShift 20s ease-in-out infinite;
+    }
+    @keyframes bgShift {
+      0%   { background-position: 0% 50%; }
+      25%  { background-position: 100% 0%; }
+      50%  { background-position: 100% 100%; }
+      75%  { background-position: 0% 100%; }
+      100% { background-position: 0% 50%; }
+    }
 
-    /* ── COVER ─────────────────────────────────────────────── */
+    /* ─── FLOATING BACKGROUND BUBBLES ─── */
+    #bg-canvas {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none; overflow: hidden;
+    }
+    .bubble {
+      position: absolute; border-radius: 50%;
+      animation: floatUp var(--dur, 18s) ease-in-out infinite;
+      opacity: 0;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(105vh) translateX(0px)  scale(0.6) rotate(0deg);   opacity: 0; }
+      8%   { opacity: var(--op, 0.35); }
+      30%  { transform: translateY(70vh)  translateX(30px)  scale(0.9) rotate(90deg); }
+      60%  { transform: translateY(35vh)  translateX(-25px) scale(1.0) rotate(200deg);}
+      92%  { opacity: var(--op, 0.35); }
+      100% { transform: translateY(-15vh) translateX(10px)  scale(1.15) rotate(360deg); opacity: 0; }
+    }
+
+    /* ─── SPARKLES ─── */
+    .sparkle {
+      position: absolute; pointer-events: none;
+      width: var(--sz, 6px); height: var(--sz, 6px);
+      border-radius: 50%;
+      background: var(--sc, #f5c842);
+      animation: sparklePop var(--sd, 4s) ease-in-out infinite;
+      opacity: 0;
+    }
+    @keyframes sparklePop {
+      0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+      20%  { opacity: 0.85; transform: scale(1.4) rotate(45deg); }
+      50%  { opacity: 0.5; transform: scale(0.8) rotate(180deg); }
+      80%  { opacity: 0.7; transform: scale(1.1) rotate(270deg); }
+    }
+
+    /* ─── COVER ─── */
     .cover {
-      position: relative;
+      position: relative; z-index: 1;
       min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       text-align: center; padding: 40px 24px; overflow: hidden;
       background: radial-gradient(ellipse at 20% 30%, #3b1f5e 0%, #1a1228 55%, #0d0a1a 100%);
     }
@@ -39,107 +88,180 @@
       90%  { opacity: 0.6; }
       100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
     }
-    .cover-badge { font-weight: 300; font-size: 13px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; opacity: 0; animation: riseUp 1s ease forwards 0.3s; }
-    .cover-title { font-family: 'Playfair Display', serif; font-size: clamp(52px, 12vw, 110px); font-weight: 700; line-height: 1; color: #fff; opacity: 0; animation: riseUp 1s ease forwards 0.6s; }
-    .cover-title span { display: block; font-style: italic; font-weight: 400; font-size: clamp(36px, 8vw, 72px); background: linear-gradient(90deg, #f5c842, #ff7eb3, #a78bfa); -webkit-background-clip: text; color: transparent; margin-top: 4px; }
-    .cover-year { font-size: 18px; font-weight: 700; letter-spacing: 8px; color: rgba(255,255,255,0.35); margin-top: 16px; opacity: 0; animation: riseUp 1s ease forwards 0.9s; }
-    .cover-subtitle { margin-top: 32px; font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.65); max-width: 380px; line-height: 1.7; opacity: 0; animation: riseUp 1s ease forwards 1.2s; }
-    .cover-btn { display: inline-block; margin-top: 48px; padding: 16px 48px; font-size: 15px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; color: var(--dark); background: linear-gradient(135deg, #f5c842, #ff9f43); border-radius: 60px; box-shadow: 0 0 40px rgba(245,200,66,0.45); opacity: 0; animation: riseUp 1s ease forwards 1.5s; transition: transform 0.3s, box-shadow 0.3s; }
+    .cover-badge {
+      font-weight: 300; font-size: 13px; letter-spacing: 5px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 18px;
+      opacity: 0; animation: riseUp 1s ease forwards 0.3s;
+    }
+    .cover-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(52px, 12vw, 110px); font-weight: 700;
+      line-height: 1; color: #fff;
+      opacity: 0; animation: riseUp 1s ease forwards 0.6s;
+    }
+    .cover-title span {
+      display: block; font-style: italic; font-weight: 400;
+      font-size: clamp(36px, 8vw, 72px);
+      background: linear-gradient(90deg, #f5c842, #ff7eb3, #a78bfa);
+      -webkit-background-clip: text; color: transparent; margin-top: 4px;
+    }
+    .cover-year {
+      font-size: 18px; font-weight: 700; letter-spacing: 8px;
+      color: rgba(255,255,255,0.35); margin-top: 16px;
+      opacity: 0; animation: riseUp 1s ease forwards 0.9s;
+    }
+    .cover-subtitle {
+      margin-top: 32px; font-size: 17px; font-weight: 300;
+      color: rgba(255,255,255,0.65); max-width: 380px; line-height: 1.7;
+      opacity: 0; animation: riseUp 1s ease forwards 1.2s;
+    }
+    .cover-btn {
+      display: inline-block; margin-top: 48px; padding: 16px 48px;
+      font-size: 15px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; text-decoration: none; color: var(--dark);
+      background: linear-gradient(135deg, #f5c842, #ff9f43);
+      border-radius: 60px; box-shadow: 0 0 40px rgba(245,200,66,0.45);
+      opacity: 0; animation: riseUp 1s ease forwards 1.5s;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
     .cover-btn:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 0 60px rgba(245,200,66,0.7); }
-    .cover-divider { position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; background: var(--soft-white); clip-path: ellipse(60% 100% at 50% 100%); }
-    .cover-seal { position: absolute; bottom: 100px; right: clamp(20px, 6vw, 80px); width: 100px; height: 100px; border-radius: 50%; border: 2px solid rgba(245,200,66,0.4); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; color: var(--gold); letter-spacing: 1px; opacity: 0; animation: riseUp 1s ease forwards 1.8s; }
+    .cover-divider {
+      position: absolute; bottom: 0; left: 0; width: 100%; height: 80px;
+      background: var(--soft-white); clip-path: ellipse(60% 100% at 50% 100%);
+    }
+    .cover-seal {
+      position: absolute; bottom: 100px; right: clamp(20px, 6vw, 80px);
+      width: 100px; height: 100px; border-radius: 50%;
+      border: 2px solid rgba(245,200,66,0.4);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-size: 11px; color: var(--gold); letter-spacing: 1px;
+      opacity: 0; animation: riseUp 1s ease forwards 1.8s;
+    }
     .cover-seal::before { content: '✦'; font-size: 28px; display: block; }
-    @keyframes riseUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes riseUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-    /* ── ALBUM SECTION (animated bg) ───────────────────────── */
+    /* ─── ALBUM ─── */
     .album {
-      position: relative;
+      position: relative; z-index: 1;
       max-width: 780px; margin: 0 auto; padding: 60px 24px 80px;
-      z-index: 1;
+    }
+    .album-title {
+      font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700;
+      text-align: center; margin-bottom: 48px;
     }
 
-    /* Subtle drifting blobs — very faint */
-    .album-bg {
-      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
-    }
-    .blob {
-      position: absolute; border-radius: 50%; filter: blur(110px);
-      animation: blobDrift var(--bd, 30s) ease-in-out infinite alternate;
-      opacity: 0.07;
-    }
-    .blob-1 { width: 600px; height: 600px; background: #4facfe; top: -200px; left: -200px; --bd: 34s; }
-    .blob-2 { width: 500px; height: 500px; background: #ff7eb3; top: 35%; right: -200px; --bd: 40s; animation-delay: -14s; }
-    .blob-3 { width: 460px; height: 460px; background: #f5c842; bottom: 0; left: 5%; --bd: 28s; animation-delay: -6s; }
-    @keyframes blobDrift {
-      0%   { transform: translate(0, 0); }
-      100% { transform: translate(30px, -20px); }
-    }
-
-    .album-title { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; text-align: center; margin-bottom: 48px; position: relative; z-index: 1; }
-
-    /* ── CARDS ──────────────────────────────────────────────── */
+    /* ─── CARD WRAPPER with glow aura ─── */
     .card-wrap {
-      position: relative; margin-bottom: 36px;
-      opacity: 0; transform: translateY(40px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      position: relative; margin-bottom: 52px;
     }
-    .card-wrap.visible { opacity: 1; transform: translateY(0); }
-
-    /* Subtle glow aura behind each card */
-    .card-aura {
-      position: absolute; inset: -16px; border-radius: 44px;
-      filter: blur(28px); opacity: 0; z-index: 0;
-      transition: opacity 0.5s ease;
+    /* soft aura behind the card — colour per person */
+    .card-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -20px -24px;
+      border-radius: 48px;
+      filter: blur(36px);
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      z-index: 0;
     }
-    .card-wrap:hover .card-aura { opacity: 0.28; }
-    .stasya .card-aura  { background: #89d8f8; }
-    .sasha  .card-aura  { background: #ffcc70; }
-    .rita   .card-aura  { background: #c77dff; }
-    .alina  .card-aura  { background: #ffc2d4; }
+    .card-wrap.visible::before { opacity: 1; }
 
+    .card-wrap.stasya::before { background: radial-gradient(ellipse, rgba(79,172,254,0.38) 0%, rgba(29,78,137,0.18) 60%, transparent 100%); }
+    .card-wrap.sasha::before  { background: radial-gradient(ellipse, rgba(255,159,67,0.38)  0%, rgba(212,84,26,0.18)  60%, transparent 100%); }
+    .card-wrap.rita::before   { background: radial-gradient(ellipse, rgba(199,125,255,0.38) 0%, rgba(74,14,92,0.18)   60%, transparent 100%); }
+    .card-wrap.alina::before  { background: radial-gradient(ellipse, rgba(255,126,179,0.38) 0%, rgba(123,20,80,0.18)  60%, transparent 100%); }
+
+    /* ─── CARDS ─── */
     .card {
-      position: relative; border-radius: 28px; overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.12); z-index: 1;
-      transition: box-shadow 0.3s, transform 0.3s;
+      position: relative; z-index: 1;
+      border-radius: 28px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease, box-shadow 0.3s;
     }
-    .card-wrap:hover .card { box-shadow: 0 30px 80px rgba(0,0,0,0.22); transform: translateY(-4px); }
+    .card-wrap.visible .card { opacity: 1; transform: translateY(0); }
+    .card:hover { box-shadow: 0 30px 80px rgba(0,0,0,0.18); }
     .card-bg { position: absolute; inset: 0; z-index: 0; }
     .card-inner { position: relative; z-index: 1; padding: 28px; }
-    .card-photo { width: 100%; border-radius: 18px; display: block; object-fit: cover; max-height: 420px; box-shadow: 0 8px 32px rgba(0,0,0,0.25); transition: transform 0.4s ease; }
-    .card-wrap:hover .card-photo { transform: scale(1.02); }
-    .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; flex-wrap: wrap; gap: 12px; }
-    .card-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: white; text-shadow: 0 2px 12px rgba(0,0,0,0.3); }
-    .card-song-btn { display: flex; align-items: center; gap: 10px; padding: 12px 22px; background: rgba(255,255,255,0.18); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.3); border-radius: 50px; text-decoration: none; color: white; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; transition: background 0.3s, transform 0.2s; max-width: 100%; }
+    .card-photo {
+      width: 100%; border-radius: 18px; display: block;
+      object-fit: cover; max-height: 420px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      transition: transform 0.4s ease;
+    }
+    .card:hover .card-photo { transform: scale(1.02); }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 20px; flex-wrap: wrap; gap: 12px;
+    }
+    .card-name {
+      font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700;
+      color: white; text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    .card-song-btn {
+      display: flex; align-items: center; gap: 10px; padding: 12px 22px;
+      background: rgba(255,255,255,0.18); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.3); border-radius: 50px;
+      text-decoration: none; color: white; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.5px; transition: background 0.3s, transform 0.2s;
+      max-width: 100%;
+    }
     .card-song-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.04); }
-    .play-icon { width: 30px; height: 30px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .play-icon::after { content: ''; display: block; width: 0; height: 0; border-style: solid; border-width: 5px 0 5px 9px; border-color: transparent transparent transparent #333; margin-left: 2px; }
+    .play-icon {
+      width: 30px; height: 30px; background: white; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .play-icon::after {
+      content: ''; display: block; width: 0; height: 0; border-style: solid;
+      border-width: 5px 0 5px 9px; border-color: transparent transparent transparent #333;
+      margin-left: 2px;
+    }
 
-    /* Card gradients */
+    /* CARD GRADIENTS */
     .stasya .card-bg { background: linear-gradient(145deg, #1d4e89, #4facfe, #89d8f8); }
     .sasha  .card-bg { background: linear-gradient(145deg, #7b2d00, #d4541a, #ff9f43, #ffcc70); }
     .rita   .card-bg { background: linear-gradient(145deg, #4a0e5c, #9b2fb3, #c77dff); }
     .alina  .card-bg { background: linear-gradient(145deg, #7b1450, #d63384, #ff7eb3, #ffc2d4); }
 
-    /* ── GROUP PHOTO ────────────────────────────────────────── */
-    .group-photo-wrap { margin-bottom: 48px; border-radius: 28px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.13); background: linear-gradient(135deg, #1a1228, #3b1f5e, #1a1228); padding: 6px; position: relative; z-index: 1; }
+    /* GROUP PHOTO */
+    .group-photo-wrap {
+      position: relative; z-index: 1;
+      margin-bottom: 48px;
+      border-radius: 28px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.13);
+      background: linear-gradient(135deg, #1a1228, #3b1f5e, #1a1228);
+      padding: 6px;
+    }
     .group-photo-inner { border-radius: 22px; overflow: hidden; position: relative; }
-    .group-photo { width: 100%; display: block; max-height: 480px; object-fit: cover; border-radius: 22px; transition: transform 0.4s ease; }
+    .group-photo {
+      width: 100%; display: block;
+      max-height: 480px; object-fit: cover; border-radius: 22px;
+      transition: transform 0.4s ease;
+    }
     .group-photo-wrap:hover .group-photo { transform: scale(1.02); }
-    .group-placeholder { display: none; flex-direction: column; align-items: center; justify-content: center; gap: 12px; height: 260px; border-radius: 22px; border: 2px dashed rgba(245,200,66,0.35); background: rgba(245,200,66,0.04); }
-    .group-placeholder-icon { font-size: 48px; }
-    .group-placeholder-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; color: rgba(255,255,255,0.4); letter-spacing: 1px; }
 
-    /* ── FOOTER ─────────────────────────────────────────────── */
-    .footer-section { text-align: center; margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(0,0,0,0.08); position: relative; z-index: 1; }
+    /* FOOTER */
+    .footer-section { position: relative; z-index: 1; text-align: center; margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(0,0,0,0.08); }
     .footer-section p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 20px; color: #888; }
     .footer-section span { font-style: normal; font-weight: 700; color: var(--dark); }
     .footer-hearts { font-size: 28px; margin-top: 12px; display: block; animation: heartbeat 1.8s ease-in-out infinite; }
-    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.2); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.2); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.1); }
+    }
   </style>
 </head>
 <body>
 
-<!-- ── COVER ── -->
+<!-- floating pastel bubbles in background -->
+<div id="bg-canvas"></div>
+
 <section class="cover" id="top">
   <div class="stars" id="stars"></div>
   <p class="cover-badge">9 Класс · Выпускники</p>
@@ -157,32 +279,19 @@
   <div class="cover-divider"></div>
 </section>
 
-<!-- ── ANIMATED BG LAYER ── -->
-<div class="album-bg">
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
-</div>
-
-<!-- ── ALBUM ── -->
 <section class="album" id="album">
   <h2 class="album-title">Наши моменты</h2>
 
-  <!-- Общая фото -->
+  <!-- ОБЩАЯ ФОТО -->
   <div class="group-photo-wrap">
     <div class="group-photo-inner">
-      <img src="all.png" alt="Наша общая фотка" class="group-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="group-placeholder">
-        <span class="group-placeholder-icon">📸</span>
-        <span class="group-placeholder-text">наша общая фотка</span>
-      </div>
+      <img src="all.png" alt="Наша общая фотка" class="group-photo" onerror="this.style.display='none'">
     </div>
   </div>
 
   <!-- СТАСЯ -->
   <div class="card-wrap stasya">
-    <div class="card-aura"></div>
-    <div class="card">
+    <div class="card stasya">
       <div class="card-bg"></div>
       <div class="card-inner">
         <img class="card-photo" src="stasya .png" alt="Стася">
@@ -199,8 +308,7 @@
 
   <!-- САША -->
   <div class="card-wrap sasha">
-    <div class="card-aura"></div>
-    <div class="card">
+    <div class="card sasha">
       <div class="card-bg"></div>
       <div class="card-inner">
         <img class="card-photo" src="sasha.jpg" alt="Саша">
@@ -217,8 +325,7 @@
 
   <!-- РИТА -->
   <div class="card-wrap rita">
-    <div class="card-aura"></div>
-    <div class="card">
+    <div class="card rita">
       <div class="card-bg"></div>
       <div class="card-inner">
         <img class="card-photo" src="rita.JPG" alt="Рита">
@@ -235,16 +342,15 @@
 
   <!-- АЛИНА -->
   <div class="card-wrap alina">
-    <div class="card-aura"></div>
-    <div class="card">
+    <div class="card alina">
       <div class="card-bg"></div>
       <div class="card-inner">
         <img class="card-photo" src="alina.JPG" alt="Алина">
         <div class="card-footer">
           <div class="card-name">Алина 🌸</div>
-          <a class="card-song-btn" href="https://music.yandex.ru/album/29005064/track/114780508" target="_blank">
+          <a class="card-song-btn" href="https://music.yandex.ru/album/57344/track/39844167" target="_blank">
             <span class="play-icon"></span>
-            Pharrell Williams — Happy (Minions)
+            DJ Smash — Moscow Never Sleeps
           </a>
         </div>
       </div>
@@ -258,7 +364,7 @@
 </section>
 
 <script>
-  // Stars
+  /* ── Звёзды ── */
   const starsEl = document.getElementById('stars');
   for (let i = 0; i < 120; i++) {
     const s = document.createElement('div');
@@ -268,7 +374,7 @@
     starsEl.appendChild(s);
   }
 
-  // Confetti streamers on cover
+  /* ── Конфетти ── */
   const colors = ['#f5c842','#ff7eb3','#a78bfa','#5eead4','#fb923c'];
   const cover = document.querySelector('.cover');
   for (let i = 0; i < 30; i++) {
@@ -279,9 +385,72 @@
     cover.appendChild(st);
   }
 
-  // Scroll reveal for cards
+  /* ── Плавающие пузырьки на белом фоне ── */
+  const bubbleColors = [
+    'rgba(79,172,254,VAL)',   // blue — Стася
+    'rgba(137,216,248,VAL)',  // sky
+    'rgba(255,159,67,VAL)',   // orange — Саша
+    'rgba(255,204,112,VAL)',  // gold
+    'rgba(199,125,255,VAL)',  // purple — Рита
+    'rgba(167,139,250,VAL)',  // lavender
+    'rgba(255,126,179,VAL)',  // pink — Алина
+    'rgba(255,194,212,VAL)',  // blush
+    'rgba(245,200,66,VAL)',   // gold accent
+    'rgba(94,234,212,VAL)',   // teal
+  ];
+  const canvas = document.getElementById('bg-canvas');
+
+  // bubbles
+  for (let i = 0; i < 80; i++) {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const size = 12 + Math.random() * 100;
+    const col = bubbleColors[Math.floor(Math.random() * bubbleColors.length)];
+    const op = (0.18 + Math.random() * 0.28).toFixed(2);
+    const color = col.replace('VAL', op);
+    const dur = 10 + Math.random() * 16;
+    const delay = Math.random() * 22;
+    b.style.cssText = `
+      left: ${Math.random()*100}%;
+      bottom: -${size}px;
+      width: ${size}px;
+      height: ${size}px;
+      background: ${color};
+      --dur: ${dur}s;
+      --op: ${op};
+      animation-duration: ${dur}s;
+      animation-delay: -${delay}s;
+    `;
+    canvas.appendChild(b);
+  }
+
+  // sparkles
+  const sparkleColors = ['#f5c842','#ff7eb3','#a78bfa','#4facfe','#ff9f43','#5eead4'];
+  for (let i = 0; i < 40; i++) {
+    const sp = document.createElement('div');
+    sp.className = 'sparkle';
+    const sz = 4 + Math.random() * 8;
+    const sc = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+    const sd = 2 + Math.random() * 5;
+    sp.style.cssText = `
+      left: ${Math.random()*100}%;
+      top: ${Math.random()*100}%;
+      --sz: ${sz}px;
+      --sc: ${sc};
+      --sd: ${sd}s;
+      animation-delay: -${Math.random()*6}s;
+    `;
+    canvas.appendChild(sp);
+  }
+
+  /* ── Scroll reveal (card-wrap) ── */
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
   }, { threshold: 0.12 });
   document.querySelectorAll('.card-wrap').forEach(c => observer.observe(c));
 </script>
